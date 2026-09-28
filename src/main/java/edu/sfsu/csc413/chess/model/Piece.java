@@ -4,7 +4,7 @@ public class Piece {
     private final Color color;
     private final PieceType type;
 
-    Piece( Color c, PieceType t) {
+    public Piece( Color c, PieceType t) {
         color = c;
         type = t;
     }
