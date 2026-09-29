@@ -1,5 +1,7 @@
 package edu.sfsu.csc413.chess.model;
 
+import java.util.Locale;
+
 /**
  * A single move: which piece went where, and what happened as a result.
  *
@@ -26,29 +28,40 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
      * A move to an empty square.
      */
     public static Move quiet(Position from, Position to, Piece moved) {
-        throw new UnsupportedOperationException("M2: implement Move.quiet");
+        //throw new UnsupportedOperationException("M2: implement Move.quiet");
+        return new Move(from, to, moved, null, null);
     }
 
     /**
      * A move that removes an enemy piece from the destination square.
      */
     public static Move capture(Position from, Position to, Piece moved, Piece captured) {
-        throw new UnsupportedOperationException("M2: implement Move.capture");
+        //throw new UnsupportedOperationException("M2: implement Move.capture");
+        return new Move(from, to, moved, captured, null);
     }
 
     /**
      * A pawn reaching the far rank and becoming {@code promotesTo}.
      */
     public static Move promotion(Position from, Position to, Piece moved, Piece captured, PieceType promotesTo) {
-        throw new UnsupportedOperationException("M2: implement Move.promotion");
+        //throw new UnsupportedOperationException("M2: implement Move.promotion");
+        return new Move(from, to, moved, captured, promotesTo);
     }
-
+    private boolean isNotValidMove(Position f, Position t) {
+        return !Position.isOnBoard(to.file(), to.rank()) && !Position.isOnBoard(from.file(), from.rank());
+    }
     public boolean isCapture() {
-        throw new UnsupportedOperationException("M2: implement Move.isCapture");
+        if (isNotValidMove(from, to)) {
+            return false;
+        }
+        return captured != null;
     }
 
     public boolean isPromotion() {
-        throw new UnsupportedOperationException("M2: implement Move.isPromotion");
+        if (isNotValidMove(from, to)) {
+            return false;
+        }
+        return to.rank() == 0 || to.rank() == (Position.BOARD_SIZE - 1);
     }
 
     /**
@@ -57,6 +70,33 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
      */
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("M2: implement Move.toString");
+        //throw new UnsupportedOperationException("M2: implement Move.toString");
+        StringBuilder text = new StringBuilder();
+        // Piece piece = board.pieceAt(from);
+        text.append(from);
+        if (isCapture()) {
+            text.append('x');
+        }
+        text.append(to);
+        if (isPromotion()) {
+            char sym = promotesTo.symbol();
+
+            if (moved.color() == Color.WHITE) {
+                text.append(Character.toLowerCase(sym)); // this doesn't make sense to me why this works
+            } else {
+                text.append(Character.toUpperCase(sym));
+            }
+        }
+        /*
+        if (isPromotion()) {
+            // this is not the way to do this
+
+            if (!Character.isLowerCase(moved.symbol())) {
+                text.append(String.valueOf(promotesTo.symbol()).toLowerCase());
+            } else {
+                text.append(promotesTo.symbol());
+            }
+        }*/
+        return text.toString();
     }
 }

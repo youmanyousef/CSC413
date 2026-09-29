@@ -31,7 +31,65 @@ public class Pawn extends Piece {
 
     @Override
     public List<Move> pseudoLegalMoves(Board board, Position from) {
-        throw new UnsupportedOperationException("M2: implement Pawn.pseudoLegalMoves");
+        List<Move> moveList = new ArrayList<Move>();
+        Position oneForward = from.offsetOrNull(0, this.color().pawnDirection());
+        Position startingJump = from.offsetOrNull(0,2*this.color().pawnDirection());
+        if (
+                (from.rank() == this.color().pawnStartRank()) &&
+                (oneForward != null) &&
+                (startingJump != null) &&
+                (board.pieceAt(startingJump) == null) &&
+                (board.pieceAt(oneForward) == null)
+        ) {
+            moveList.add(Move.quiet(from, startingJump, this));
+        }
+
+        Position diagonalLeft = from.offsetOrNull(-1, this.color().pawnDirection());
+        if (diagonalLeft != null) {
+            Piece pieceAtDiagonalLeft = board.pieceAt(diagonalLeft);
+            if (pieceAtDiagonalLeft != null && pieceAtDiagonalLeft.color() != this.color()) {
+                if (diagonalLeft.rank() == this.color().promotionRank()) {
+                    for (PieceType type : PROMOTION_CHOICES) {
+                        moveList.add(Move.promotion(
+                                from, diagonalLeft, this, pieceAtDiagonalLeft, type
+                        ));
+                    }
+                } else {
+                    moveList.add(Move.capture(from, diagonalLeft, this, pieceAtDiagonalLeft));
+                }
+            }
+        }
+        Position diagonalRight = from.offsetOrNull(1, this.color().pawnDirection());
+        if (diagonalRight != null) {
+            Piece pieceAtDiagonalRight = board.pieceAt(diagonalRight);
+            if (pieceAtDiagonalRight != null && pieceAtDiagonalRight.color() != this.color()) {
+                if (diagonalRight.rank() == this.color().promotionRank()) {
+                    for (PieceType type : PROMOTION_CHOICES) {
+                        moveList.add(Move.promotion(
+                                from, diagonalRight, this, pieceAtDiagonalRight, type
+                        ));
+                    }
+                } else {
+                    moveList.add(Move.capture(from, diagonalRight, this, pieceAtDiagonalRight));
+                }
+            }
+        }
+
+        if (oneForward != null) {
+            if (board.pieceAt(oneForward) != null) {
+                return moveList;
+            }
+
+            if (oneForward.rank() == this.color().promotionRank()) {
+                for (PieceType type : PROMOTION_CHOICES) {
+                    moveList.add(Move.promotion(from, oneForward, this, null, type));
+                }
+            } else {
+                moveList.add(Move.quiet(from, oneForward, this));
+            }
+
+        }
+        return moveList;
     }
 
     /**
@@ -47,6 +105,10 @@ public class Pawn extends Piece {
      */
     @Override
     public boolean attacks(Board board, Position from, Position target) {
-        throw new UnsupportedOperationException("M2: implement Pawn.attacks");
+        //throw new UnsupportedOperationException("M2: implement Pawn.attacks");
+        Position diagonalLeft = from.offsetOrNull(-1, this.color().pawnDirection());
+        Position diagonalRight = from.offsetOrNull(1, this.color().pawnDirection());
+        return (diagonalLeft != null && diagonalLeft.equals(target))
+                || (diagonalRight != null && diagonalRight.equals(target));
     }
 }

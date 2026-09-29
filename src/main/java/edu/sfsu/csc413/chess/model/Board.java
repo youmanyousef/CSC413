@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Board {
     private final Piece[][] squares = new Piece[Position.BOARD_SIZE][Position.BOARD_SIZE];
 
-    Board() {
+    public Board() {
 
     }
 
