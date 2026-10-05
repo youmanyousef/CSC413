@@ -45,11 +45,11 @@ public class Game {
     }
 
     public Board board() {
-        throw new UnsupportedOperationException("M3: implement Game.board");
+        return board;
     }
 
     public Color sideToMove() {
-        throw new UnsupportedOperationException("M3: implement Game.sideToMove");
+        return sideToMove;
     }
 
     /**
@@ -59,7 +59,7 @@ public class Game {
      * out would let any caller rewrite the game's past.
      */
     public List<Move> history() {
-        throw new UnsupportedOperationException("M3: implement Game.history");
+        return List.copyOf(history);
     }
 
     /**

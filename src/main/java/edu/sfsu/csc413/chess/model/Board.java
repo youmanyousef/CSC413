@@ -1,5 +1,7 @@
 package edu.sfsu.csc413.chess.model;
 
+import edu.sfsu.csc413.chess.factory.PieceFactory;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -53,6 +55,39 @@ public class Board {
             }
         }
         return tempList;
+    }
+
+    /**
+     *
+     * I've chosen to use PieceFactory to save time from writing a new switch statement.
+     * This handle's all the promotion cases from pawn to other PieceTypes
+     */
+    public void apply(Move move) {   // lift the piece off `from`, set it down on `to`
+        int from_f = move.from().file();
+        int from_r = move.from().rank();
+        int to_f = move.to().file();
+        int to_r = move.to().rank();
+        Piece fromPiece = squares[from_f][from_r];
+        if (move.isPromotion()) {
+            squares[to_f][to_r] = PieceFactory.create(move.promotesTo(), fromPiece.color());
+        } else {
+            squares[to_f][to_r] = squares[from_f][from_r];
+        }
+        squares[from_f][from_r] = null;
+    }
+
+    public void undo(Move move) {     // put `moved` back on `from`; put `captured` (or null) back on `to`
+        int from_f = move.from().file();
+        int from_r = move.from().rank();
+        int to_f = move.to().file();
+        int to_r = move.to().rank();
+        Piece toPiece = squares[to_f][to_r];
+        if (move.isPromotion()) {
+            squares[to_f][to_r] = PieceFactory.create(PieceType.PAWN, toPiece.color());
+        } else {
+            squares[to_f][to_r] = squares[from_f][from_r];
+        }
+        squares[to_f][to_r] = move.captured();
     }
 
     @Override
