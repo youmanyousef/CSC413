@@ -78,7 +78,9 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
             text.append('x');
         }
         text.append(to);
-        if (isPromotion()) {
+        if (promotesTo != null) { // isPromotion() does weird bug? figure out why: GameTest.startFromFen:121 » NullPointer
+            //System.out.println(isPromotion() + " - "+promotesTo);
+
             char sym = promotesTo.symbol();
 
             if (moved.color() == Color.WHITE) {
