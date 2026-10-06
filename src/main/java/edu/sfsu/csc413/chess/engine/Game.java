@@ -4,6 +4,7 @@ import edu.sfsu.csc413.chess.factory.BoardFactory;
 import edu.sfsu.csc413.chess.model.Board;
 import edu.sfsu.csc413.chess.model.Color;
 import edu.sfsu.csc413.chess.model.Move;
+import edu.sfsu.csc413.chess.model.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +72,11 @@ public class Game {
      * or its callers.
      */
     public List<Move> legalMoves() {
-        throw new UnsupportedOperationException("M3: implement Game.legalMoves");
+        List<Move> moves = new ArrayList<>();
+        for (Position from : board.positionsOf(sideToMove)) {
+            moves.addAll(board.pieceAt(from).pseudoLegalMoves(board, from));
+        }
+        return moves;
     }
 
     /**
@@ -84,7 +89,16 @@ public class Game {
      * with that case.
      */
     public Optional<Move> findLegalMove(String notation) {
-        throw new UnsupportedOperationException("M3: implement Game.findLegalMove");
+        try {
+            for (Move move : legalMoves()) {
+                if (move.toString().equals(notation)) {
+                    return Optional.of(move);
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
+        return Optional.empty();
     }
 
     /**
