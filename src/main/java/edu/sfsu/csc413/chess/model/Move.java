@@ -48,7 +48,7 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
         return new Move(from, to, moved, captured, promotesTo);
     }
     private boolean isNotValidMove(Position f, Position t) {
-        return !Position.isOnBoard(to.file(), to.rank()) && !Position.isOnBoard(from.file(), from.rank());
+        return !Position.isOnBoard(to.file(), to.rank()) || !Position.isOnBoard(from.file(), from.rank()); // is it supposed to be and, or?
     }
     public boolean isCapture() {
         if (isNotValidMove(from, to)) {
@@ -74,9 +74,9 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
         StringBuilder text = new StringBuilder();
         // Piece piece = board.pieceAt(from);
         text.append(from);
-        if (isCapture()) {
+        /*if (isCapture()) {
             text.append('x');
-        }
+        }*/ // is this not correct FEN?
         text.append(to);
         if (promotesTo != null) { // isPromotion() does weird bug? figure out why: GameTest.startFromFen:121 » NullPointer
             //System.out.println(isPromotion() + " - "+promotesTo);

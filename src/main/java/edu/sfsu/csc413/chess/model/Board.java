@@ -82,11 +82,12 @@ public class Board {
         int to_f = move.to().file();
         int to_r = move.to().rank();
         Piece toPiece = squares[to_f][to_r];
-        if (move.isPromotion()) {
+        /*if (move.isPromotion()) {
             squares[to_f][to_r] = PieceFactory.create(PieceType.PAWN, toPiece.color());
         } else {
             squares[to_f][to_r] = squares[from_f][from_r];
-        }
+        }*/
+        squares[from_f][from_r] = move.moved();
         squares[to_f][to_r] = move.captured();
     }
 
