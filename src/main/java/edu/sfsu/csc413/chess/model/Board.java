@@ -2,6 +2,7 @@ package edu.sfsu.csc413.chess.model;
 
 import edu.sfsu.csc413.chess.factory.PieceFactory;
 
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -89,6 +90,18 @@ public class Board {
         }*/
         squares[from_f][from_r] = move.moved();
         squares[to_f][to_r] = move.captured();
+    }
+
+    public Position kingPosition(Color color) {
+        // throw new UnsupportedOperationException("M5: to be implemented");
+        List<Position> piecesOfThisColor = positionsOf(color);
+        for (Position pos : piecesOfThisColor) {
+            Piece currentPiece = pieceAt(pos);
+            if (currentPiece.type() == PieceType.KING) {
+                return pos;
+            }
+        }
+        return null;
     }
 
     @Override

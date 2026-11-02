@@ -63,4 +63,11 @@ public final class MoveGenerator {
         }
         return moves;
     }
+
+    public static boolean isInCheck(Board board, Color color) {
+        throw new UnsupportedOperationException("M5: to be implemented");
+    }
+    public static boolean isAttacked(Board board, Position target, Color attacker) {
+        throw new UnsupportedOperationException("M5: to be implemented");
+    }
 }
