@@ -1,3 +1,4 @@
+```mermaid
 classDiagram
     class MoveGenerator {
         #pseudoLegalMoves()
@@ -110,3 +111,4 @@ classDiagram
     Position --o Board
     Piece --> Board
     
+```
