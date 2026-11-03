@@ -61,7 +61,7 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
         if (isNotValidMove(from, to)) {
             return false;
         }
-        return to.rank() == 0 || to.rank() == (Position.BOARD_SIZE - 1);
+        return (to.rank() == 0 || to.rank() == (Position.BOARD_SIZE - 1)) && promotesTo != null;
     }
 
     /**

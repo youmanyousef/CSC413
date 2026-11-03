@@ -1,9 +1,6 @@
 package edu.sfsu.csc413.chess.engine;
 
-import edu.sfsu.csc413.chess.model.Board;
-import edu.sfsu.csc413.chess.model.Color;
-import edu.sfsu.csc413.chess.model.Move;
-import edu.sfsu.csc413.chess.model.Position;
+import edu.sfsu.csc413.chess.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +38,17 @@ public final class MoveGenerator {
      * when it tightens.
      */
     public static List<Move> legalMoves(Board board, Color color) {
-        return pseudoLegalMoves(board, color);
+        //return pseudoLegalMoves(board, color);
+        List<Move> moves = new ArrayList<>();
+        for (Move move : pseudoLegalMoves(board, color)) {
+            if (move == null) {continue;}
+            board.apply(move);
+            if (!MoveGenerator.isInCheck(board, color)) {
+                moves.add(move);
+            }
+            board.undo(move);
+        }
+        return moves;
     }
 
     /**
@@ -64,10 +71,28 @@ public final class MoveGenerator {
         return moves;
     }
 
+    /**
+     * true if color's king is attacked by the other color
+     */
     public static boolean isInCheck(Board board, Color color) {
-        throw new UnsupportedOperationException("M5: to be implemented");
+        //throw new UnsupportedOperationException("M5: to be implemented");
+        Position kingPosition = board.kingPosition(color);
+        if (kingPosition == null) {return false;}
+        return isAttacked(board, kingPosition, color.opposite());
     }
+
+    /**
+     * true if any piece of color attacker attacks target
+     */
     public static boolean isAttacked(Board board, Position target, Color attacker) {
-        throw new UnsupportedOperationException("M5: to be implemented");
+        //throw new UnsupportedOperationException("M5: to be implemented");
+        if (target == null) {return false;}
+        for (Position pos : board.positionsOf(attacker)) {
+            Piece attackerPiece = board.pieceAt(pos);
+            if (attackerPiece.attacks(board, pos, target)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
