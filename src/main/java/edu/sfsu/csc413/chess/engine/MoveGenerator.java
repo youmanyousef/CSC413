@@ -26,6 +26,8 @@ import java.util.List;
  */
 public final class MoveGenerator {
 
+
+
     private MoveGenerator() {
     }
 
@@ -96,11 +98,21 @@ public final class MoveGenerator {
         return false;
     }
 
-    /** returns a GameStatus object when given a board and side to move
+    /** returns a GameStatus type when given a board and side to move
      * */
     public static GameStatus status(Board board, Color sideToMove) {
-        throw new UnsupportedOperationException("M6: to be implemented");
+        if (isInCheck(board, sideToMove)) {
+            if (legalMoves(board, sideToMove).isEmpty()) {
+                return GameStatus.CHECKMATE;
+            } else {
+                return GameStatus.IN_PROGRESS;
+            }
+        }
+        if (legalMoves(board, sideToMove).isEmpty()) {
+            return GameStatus.STALEMATE;
+        } else {
+            return GameStatus.CHECK;
+        }
+        //throw new UnsupportedOperationException("M6: to be implemented");
     }
-
-
 }

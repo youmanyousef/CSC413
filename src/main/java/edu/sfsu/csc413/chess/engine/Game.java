@@ -129,13 +129,15 @@ public class Game {
         return Optional.of(move);
     }
 
-    /** Returns the state of the game, GameStatus object */
+    /** Returns the state of the game, GameStatus type */
     public GameStatus status() {
-        throw new UnsupportedOperationException("M6: to be implemented");
+        //throw new UnsupportedOperationException("M6: to be implemented");
+        return MoveGenerator.status(board, sideToMove);
     }
 
     /** Returns true if the game is over */
     public boolean isGameOver() {
-        throw new UnsupportedOperationException("M6: to be implemented");
+        //throw new UnsupportedOperationException("M6: to be implemented");
+        return status().isGameOver();
     }
 }
