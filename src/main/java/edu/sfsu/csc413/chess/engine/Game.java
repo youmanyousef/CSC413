@@ -128,4 +128,14 @@ public class Game {
         sideToMove = sideToMove.opposite();
         return Optional.of(move);
     }
+
+    /** Returns the state of the game, GameStatus object */
+    public GameStatus status() {
+        throw new UnsupportedOperationException("M6: to be implemented");
+    }
+
+    /** Returns true if the game is over */
+    public boolean isGameOver() {
+        throw new UnsupportedOperationException("M6: to be implemented");
+    }
 }

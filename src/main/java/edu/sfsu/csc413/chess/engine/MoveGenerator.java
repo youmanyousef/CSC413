@@ -95,4 +95,12 @@ public final class MoveGenerator {
         }
         return false;
     }
+
+    /** returns a GameStatus object when given a board and side to move
+     * */
+    public static GameStatus status(Board board, Color sideToMove) {
+        throw new UnsupportedOperationException("M6: to be implemented");
+    }
+
+
 }
