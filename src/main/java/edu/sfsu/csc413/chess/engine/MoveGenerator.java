@@ -105,13 +105,13 @@ public final class MoveGenerator {
             if (legalMoves(board, sideToMove).isEmpty()) {
                 return GameStatus.CHECKMATE;
             } else {
-                return GameStatus.IN_PROGRESS;
+                return GameStatus.CHECK;
             }
         }
         if (legalMoves(board, sideToMove).isEmpty()) {
             return GameStatus.STALEMATE;
         } else {
-            return GameStatus.CHECK;
+            return GameStatus.IN_PROGRESS;
         }
         //throw new UnsupportedOperationException("M6: to be implemented");
     }
