@@ -54,7 +54,6 @@ public abstract class Piece {
                 Piece foundPiece = board.pieceAt(nextPosition);
                 if (foundPiece != null) {
                     if (foundPiece.color() != this.color) {
-                        System.out.print(this.symbol()+" "+foundPiece.color()+" "+this.color);
                         moveList.add(new Move(from, nextPosition, this, foundPiece, null));
                     }
                     break;
