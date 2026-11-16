@@ -15,6 +15,7 @@ written by hand and are finished. Your job is views only.
   `controller.handle(new PlayerAction.Move("e2e4"))`.
 - Add one `case` to the `BoardView` switch so the new view can be chosen from
   the command line.
+- Every file you create must state that it was created with the help of AI. For example, `/** This view was created with the help of Gemini 3.8 */`
 
 ## Don't
 
