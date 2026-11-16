@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * A graphical 2D chessboard view implemented with Swing.
+ * This class was created with the help of Gemini 3.8
  *
  * <p>Supports click-to-move input, turn and status indicators, check and checkmate
  * alerts, pawn promotion selection windows, and smooth move animations.
