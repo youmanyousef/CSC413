@@ -34,6 +34,7 @@ public class SwingView implements BoardView {
     private JLabel turnIconLabel;
     private JLabel alertLabel;
     private JPanel alertPanel;
+    private JScrollPane alertLabelScroll;
 
     private GameController controller;
     private Game currentGame;
@@ -185,7 +186,9 @@ public class SwingView implements BoardView {
         topPanel.add(controlsPanel, BorderLayout.EAST);
 
         // Alert Panel
+        /*
         alertPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 4));
+
         alertPanel.setBackground(new java.awt.Color(54, 57, 63));
         alertPanel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new java.awt.Color(70, 74, 82), 1),
@@ -195,7 +198,47 @@ public class SwingView implements BoardView {
         alertLabel = new JLabel("Welcome to Chess!");
         alertLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
         alertLabel.setForeground(new java.awt.Color(220, 220, 220));
-        alertPanel.add(alertLabel);
+        //alertPanel.add(alertLabel);
+
+        alertLabelScroll = new JScrollPane(
+                alertLabel,
+                JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
+        );
+        alertLabelScroll.setOpaque(false);
+        alertLabelScroll.getViewport().setOpaque(false);
+        alertLabelScroll.setBorder(BorderFactory.createEmptyBorder());
+        JScrollBar hBar = alertLabelScroll.getHorizontalScrollBar();
+        hBar.setPreferredSize(new Dimension(Integer.MAX_VALUE, 5));
+        hBar.setOpaque(false);
+        alertPanel.add(alertLabelScroll, BorderLayout.CENTER);
+        */
+        alertPanel = new JPanel(new BorderLayout());
+        alertPanel.setBackground(new java.awt.Color(54, 57, 63));
+        alertPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new java.awt.Color(70, 74, 82), 1),
+                new EmptyBorder(3, 10, 3, 10)
+        ));
+
+        alertLabel = new JLabel("Welcome to Chess!", SwingConstants.CENTER);
+        alertLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
+        alertLabel.setForeground(new java.awt.Color(220, 220, 220));
+
+        alertLabelScroll = new JScrollPane(
+                alertLabel,
+                JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
+        );
+        alertLabelScroll.setOpaque(false);
+        alertLabelScroll.getViewport().setOpaque(false);
+        alertLabelScroll.setBorder(BorderFactory.createEmptyBorder());
+        alertLabelScroll.setViewportBorder(null);
+
+        JScrollBar hBar = alertLabelScroll.getHorizontalScrollBar();
+        hBar.setPreferredSize(new Dimension(0, 0));
+        hBar.setOpaque(false);
+
+        alertPanel.add(alertLabelScroll, BorderLayout.CENTER);
 
         topPanel.add(alertPanel, BorderLayout.SOUTH);
         mainContainer.add(topPanel, BorderLayout.NORTH);
