@@ -39,6 +39,7 @@ public class SwingView implements BoardView {
     private GameController controller;
     private Game currentGame;
 
+    private boolean currentlyInCheck = false;
     private Position selectedPosition = null;
     private final List<Position> legalDestinations = new ArrayList<>();
 
@@ -382,7 +383,12 @@ public class SwingView implements BoardView {
 
         switch (status) {
             case CHECK -> {
-                alertLabel.setText("⚠️ CHECK! " + side.name() + " King is in check!");
+                if (!currentlyInCheck) {
+                    currentlyInCheck = true;
+                    alertLabel.setText("⚠️ CHECK! " + side.name() + " King is in check!");
+                }
+                //if (!alertLabel.getText().contains("legal moves")) {
+                //}
                 alertPanel.setBackground(new java.awt.Color(160, 90, 20));
                 alertLabel.setForeground(java.awt.Color.WHITE);
             }
@@ -397,6 +403,7 @@ public class SwingView implements BoardView {
                 alertLabel.setForeground(java.awt.Color.WHITE);
             }
             case IN_PROGRESS -> {
+                currentlyInCheck = false;
                 if (alertLabel.getText().startsWith("⚠️ CHECK!")
                         || alertLabel.getText().startsWith("🏆 CHECKMATE!")
                         || alertLabel.getText().startsWith("½-½ STALEMATE!")) {
