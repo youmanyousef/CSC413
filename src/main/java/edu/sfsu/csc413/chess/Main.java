@@ -37,12 +37,10 @@ public final class Main {
         */
         System.out.println("Enter your view - 'emoji' for EmojiView, anything else for 'ConsoleView': ");
         String choice = scanner.nextLine();
-        BoardView view;
-        if (choice.equals("emoji")) {
-            view = new EmojiView();
-        } else {
-            view = new ConsoleView();
-        }
+        BoardView view = switch (choice) {
+            case "emoji" -> new EmojiView();
+            default -> new ConsoleView();
+        };
         GameController controller = new GameController(game, view);
         controller.start();
         controller.runLoop();
