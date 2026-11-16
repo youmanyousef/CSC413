@@ -35,11 +35,18 @@ public final class Main {
         game.undoLastMove();
         System.out.println(renderer.render(game.board()));
         */
-        System.out.println("Enter your view - 'swing' for SwingView, 'emoji' for EmojiView, anything else for 'ConsoleView': ");
-        String choice = scanner.nextLine().trim().toLowerCase();
+        String choice;
+        if (args.length > 0) {
+            choice = args[0];
+        } else {
+            System.out.println("Enter your view - 'swing' for SwingView, 'color' for ColorView, 'emoji' for EmojiView, anything else for 'ConsoleView': ");
+            choice = scanner.hasNextLine() ? scanner.nextLine().trim().toLowerCase() : "";
+        }
+
         BoardView view = switch (choice) {
             case "swing" -> new SwingView();
             case "emoji" -> new EmojiView();
+            case "color" -> new ColorView();
             default -> new ConsoleView();
         };
         GameController controller = new GameController(game, view);
